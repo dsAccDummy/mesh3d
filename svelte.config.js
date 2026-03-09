@@ -1,0 +1,30 @@
+import adapter from '@sveltejs/adapter-static';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  preprocess: vitePreprocess(),
+  kit: {
+    adapter: adapter({
+      pages: 'build',
+      assets: 'build',
+      fallback: '404.html',
+      precompress: false,
+      strict: false
+    }),
+    paths: {
+      base: process.argv.includes('dev') ? '' : '/mesh3d'
+    },
+    alias: {
+      '$lib': './src/lib',
+      '$lib/*': './src/lib/*',
+      '$components': './src/lib/components',
+      '$stores': './src/lib/stores',
+      '$services': './src/lib/services',
+      '$utils': './src/lib/utils',
+      '$types': './src/lib/types'
+    }
+  }
+};
+
+export default config;
